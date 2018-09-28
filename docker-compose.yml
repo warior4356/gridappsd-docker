@@ -1,28 +1,29 @@
-version: '2'
+version: '3.7'
 
 services:
-  sample_app:
-    image: gridappsd/sample_app
+  pyvvo:
+    image: gridappsd-pyvvo
     environment:
       GRIDAPPSD_URI: tcp://gridappsd:61613
-  #    GRIDAPPSD_USER: system
-  #    GRIDAPPSD_PASS: manager
     depends_on:
-      - gridappsd 
-    #volumes:
-      # Change upto the : where you have your git repository on your
-      # computer.  The : delinates between the host (your computer) and
-      # the container (inside of the container)  
-      #
-      # In order for the app to be registered with gridappsd a configuration
-      # file must be mounted or copied to /appconfig
-      # - $HOME/git/gridappsd-sample-app/sample_app.config:/appconfig
+      - gridappsd
 
-      # When debugging apps it is helpful to mount the application over the
-      # top of where it normally be ran so that changes on the host are immediately
-      # reflected inside the container.
-      #
-      #- $HOME/git/gridappsd-sample-app/:/usr/src/gridappsd-sample
+  mysql-pyvvo:
+    image: mysql/mysql-server:5.7
+    ports:
+      - 3307:3306
+
+    environment:
+      MYSQL_ROOT_PASSWORD: "pyvvo"
+      MYSQL_DATABASE: "pyvvo"
+      MYSQL_USER: "pyvvo"
+      MYSQL_PASSWORD: "pyvvo"
+
+    volumes:
+      - type: bind
+        source: ./mysql.cnf
+        target: /etc/my.cnf
+
   blazegraph:
     image: gridappsd/blazegraph${GRIDAPPSD_TAG}
     ports:
