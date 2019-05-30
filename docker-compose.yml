@@ -91,9 +91,9 @@ services:
 # repository.  Once uncommenting the three lines below the sample_app will be available in the
 # container
 #
-#    volumes:
-#      - ~/git/gridappsd-sample-app/sample_app:/gridappsd/applications/sample_app
-#      - ~/git/gridappsd-sample-app/sample_app/sample_app.config:/gridappsd/applications/sample_app.config
+    volumes:
+      - ~/git/gridappsd-dnp3/dnp3:/gridappsd/services/dnp3
+      - ~/git/gridappsd-dnp3/dnp3/dnp3.config:/gridappsd/services/dnp3.config
 
     depends_on:
       - mysql
